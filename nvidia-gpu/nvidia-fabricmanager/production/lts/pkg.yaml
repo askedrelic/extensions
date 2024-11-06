@@ -35,8 +35,8 @@ steps:
         cp bin/nv-fabricmanager /rootfs/usr/local/bin/
         cp bin/nvswitch-audit /rootfs/usr/local/bin/
 
-        cp share/nvidia/nvswitch/dgx2_hgx2_topology /rootfs/usr/local/share/nvidia/nvswitch/
-        cp share/nvidia/nvswitch/dgxa100_hgxa100_topology /rootfs/usr/local/share/nvidia/nvswitch/
+        # Include all topology files
+        cp -r share/nvidia/nvswitch/ /rootfs/usr/local/share/nvidia/nvswitch/
 
         cp etc/fabricmanager.cfg  /rootfs/usr/local/share/nvidia/nvswitch/
 
@@ -44,8 +44,13 @@ steps:
 
         sed -i 's/DAEMONIZE=.*/DAEMONIZE=0/g' /rootfs/usr/local/share/nvidia/nvswitch/fabricmanager.cfg
         sed -i 's/STATE_FILE_NAME=.*/STATE_FILE_NAME=\/var\/run\/nvidia-fabricmanager\/fabricmanager.state/g' /rootfs/usr/local/share/nvidia/nvswitch/fabricmanager.cfg
-        sed -i 's/TOPOLOGY_FILE_PATH=.*/TOPOLOGY_FILE_PATH=\/usr\/local\/share\/nvidia\/nvswitch/g' /rootfs/usr/local/share/nvidia/nvswitch/fabricmanager.cfg
+        sed -i 's/TOPOLOGY_FILE_PATH=.*/TOPOLOGY_FILE_PATH=\/usr\/local\/share\/nvidia\/nvswitch\/nvswitch/g' /rootfs/usr/local/share/nvidia/nvswitch/fabricmanager.cfg
         sed -i 's/DATABASE_PATH=.*/DATABASE_PATH=\/usr\/local\/share\/nvidia\/nvswitch/g' /rootfs/usr/local/share/nvidia/nvswitch/fabricmanager.cfg
+        sed -i 's/TRUNK_LINK_FAILURE_MODE=.*/TRUNK_LINK_FAILURE_MODE=1/g' /rootfs/usr/local/share/nvidia/nvswitch/fabricmanager.cfg
+        sed -i 's/FM_STAY_RESIDENT_ON_FAILURES=.*/FM_STAY_RESIDENT_ON_FAILURES=1/g' /rootfs/usr/local/share/nvidia/nvswitch/fabricmanager.cfg
+        sed -i 's/FM_CMD_BIND_INTERFACE=.*/FM_CMD_BIND_INTERFACE=127.0.0.1/g' /rootfs/usr/local/share/nvidia/nvswitch/fabricmanager.cfg
+        sed -i 's/\t//g' /rootfs/usr/local/share/nvidia/nvswitch/fabricmanager.cfg
+        sed -i '/^[ \t]*$/d' /rootfs/usr/local/share/nvidia/nvswitch/fabricmanager.cfg
     test:
       - |
         mkdir -p /extensions-validator-rootfs

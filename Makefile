@@ -34,7 +34,7 @@ BLDR := docker run --rm --user $(shell id -u):$(shell id -g) --volume $(PWD):/sr
 BUILD := docker buildx build
 PLATFORM ?= linux/amd64,linux/arm64
 PROGRESS ?= auto
-PUSH ?= false
+PUSH ?= true
 CI_ARGS ?=
 COMMON_ARGS = --file=Pkgfile
 COMMON_ARGS += --provenance=false
@@ -166,7 +166,7 @@ local-%:  ## Builds the specified target defined in the Pkgfile using the local 
 	@$(MAKE) target-$* TARGET_ARGS="--output=type=local,dest=$(DEST) $(TARGET_ARGS)"
 
 docker-%:  ## Builds the specified target defined in the Pkgfile using the docker output type. The build result will be loaded into Docker.
-	@$(MAKE) target-$* TARGET_ARGS="$(TARGET_ARGS)"
+	$(MAKE) target-$* TARGET_ARGS="$(TARGET_ARGS)"
 
 reproducibility-test:  ## Builds the reproducibility test target
 	@$(MAKE) reproducibility-test-local-reproducibility

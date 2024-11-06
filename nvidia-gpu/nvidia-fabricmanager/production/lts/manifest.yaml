@@ -2,7 +2,7 @@ version: v1alpha1
 metadata:
   name: nvidia-fabricmanager-production
   version: "$VERSION"
-  author: Sidero Labs
+  author: Matt Behrens
   description: |
     This system extension provides the Nvidia fabricmanager for GPU's that need NVLink support.
   compatibility:

@@ -36,8 +36,8 @@ container:
         - bind
         - ro
     # service state file
-    - source: /var/run/nvidia-fabricmanager
-      destination: /var/run/nvidia-fabricmanager
+    - source: /var/run
+      destination: /var/run
       type: bind
       options:
         - rshared
